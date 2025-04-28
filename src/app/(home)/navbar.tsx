@@ -78,6 +78,24 @@ export const Navbar = () => {
           </NavbarItem>
         ))}
       </div>
+
+      <div className="hidden lg:flex">
+        <Button
+          asChild
+          variant={"secondary"}
+          className="border-l border-t-0 border-b-0 border-r-0 rounded-none px-12 h-full bg-white hover:bg-pink-400 transition-colors text-lg"
+        >
+          <Link href="/sign-in">Login</Link>
+        </Button>
+
+        <Button
+          asChild
+          variant={"secondary"}
+          className="border-l border-t-0 border-b-0 border-r-0 rounded-none px-12 h-full bg-black text-white hover:text-black hover:bg-pink-400 transition-colors text-lg"
+        >
+          <Link href="/sign-up">Start Selling</Link>
+        </Button>
+      </div>
     </nav>
   );
 };
