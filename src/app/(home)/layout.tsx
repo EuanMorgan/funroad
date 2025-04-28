@@ -1,3 +1,4 @@
+import { Footer } from "~/app/(home)/footer";
 import { Navbar } from "~/app/(home)/navbar";
 
 export default function HomeLayout({
@@ -8,7 +9,8 @@ export default function HomeLayout({
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      {children}
+      <div className="flex-1 bg-[#F4F4F0]">{children}</div>
+      <Footer />
     </div>
   );
 }
