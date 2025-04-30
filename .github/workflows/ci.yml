@@ -14,7 +14,5 @@ jobs:
         run: cp .env.example .env
       - name: Typecheck
         run: bun typecheck
-      - name: Lint
-        run: bun lint
-      - name: Format
-        run: bun format:check
+      - name: Quality
+        run: bun check

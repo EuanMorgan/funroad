@@ -9,8 +9,8 @@
 		"lint": "biome lint",
 		"lint:fix": "biome lint --write",
 		"typecheck": "tsc --noEmit",
-		"check": "tsc --noEmit && biome check",
-		"check:fix": "tsc --noEmit && biome check --write",
+		"check": "biome check",
+		"check:fix": "biome check --write",
 		"format": "biome format",
 		"format:fix": "biome format --write",
 		"generate:types": "payload generate:types"
