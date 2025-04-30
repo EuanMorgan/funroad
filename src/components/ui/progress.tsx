@@ -7,6 +7,7 @@ import { cn } from "~/lib/utils";
 
 function Progress({
   className,
+  value,
   ...props
 }: React.ComponentProps<typeof ProgressPrimitive.Root>) {
   return (
