@@ -1,0 +1,16 @@
+version: '3.8'  # Adjust the version according to your Docker Compose version
+
+services:
+  mongodb:
+    image: mongo:latest  # Use the latest MongoDB image
+    container_name: mongodb
+    ports:
+      - "27017:27017"  # Expose port 27017
+    volumes:
+      - mongodb_data:/data/db  # Persist MongoDB data
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: tom  # Optional: set root user
+      MONGO_INITDB_ROOT_PASSWORD: spack  # Optional: set root password
+
+volumes:
+  mongodb_data:
