@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { CustomCategory } from "~/app/(app)/(home)/types";
+import type { CategoriesGetManyOutput } from "~/app/(app)/(home)/search-filters/types";
 
 interface SubcategoryMenuProps {
-	category: CustomCategory;
+	category: CategoriesGetManyOutput[number];
 	isOpen: boolean;
 	position: { top: number; left: number };
 }

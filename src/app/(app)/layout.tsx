@@ -1,6 +1,9 @@
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
+import { TRPCReactProvider } from "~/trpc/client";
 import "./globals.css";
+import { getQueryClient } from "~/trpc/server";
 
 const dmSans = DM_Sans({
 	subsets: ["latin"],
@@ -16,9 +19,15 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const queryClient = getQueryClient();
 	return (
 		<html lang="en">
-			<body className={`${dmSans.className} antialiased`}>{children}</body>
+			<body className={`${dmSans.className} antialiased`}>
+				<TRPCReactProvider>
+					{children}
+					<ReactQueryDevtools />
+				</TRPCReactProvider>
+			</body>
 		</html>
 	);
 }
