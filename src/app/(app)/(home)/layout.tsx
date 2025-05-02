@@ -3,6 +3,7 @@ import { getPayload } from "payload";
 import { Footer } from "~/app/(app)/(home)/footer";
 import { Navbar } from "~/app/(app)/(home)/navbar";
 import { SearchFilters } from "~/app/(app)/(home)/search-filters";
+import type { CustomCategory } from "~/app/(app)/(home)/types";
 export default async function HomeLayout({
 	children,
 }: {
@@ -21,9 +22,10 @@ export default async function HomeLayout({
 				exists: false,
 			},
 		},
+		sort: "name",
 	});
 
-	const formattedData = data.docs.map((doc) => ({
+	const formattedData: CustomCategory[] = data.docs.map((doc) => ({
 		...doc,
 		subcategories: (doc.subcategories?.docs ?? []).map((sub) => ({
 			//@ts-expect-error - Because of depth:1 we are confident doc will be a type of "Category", this will be removed when Payload fixes the type issue
@@ -31,8 +33,6 @@ export default async function HomeLayout({
 			subcategories: undefined,
 		})),
 	}));
-
-	console.log(formattedData);
 
 	return (
 		<div className="flex flex-col min-h-screen">
