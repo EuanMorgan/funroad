@@ -66,8 +66,8 @@
 		"embla-carousel-react": "^8.6.0",
 		"graphql": "^16.8.1",
 		"input-otp": "^1.4.2",
-		"lucide-react": "^0.488.0",
-		"next": "15.3.0",
+		"lucide-react": "^0.507.0",
+		"next": "15.3.1",
 		"next-themes": "^0.4.6",
 		"ora": "^8.2.0",
 		"payload": "^3.36.0",
@@ -94,5 +94,5 @@
 		"tailwindcss": "^4",
 		"typescript": "^5"
 	},
-	"packageManager": "pnpm@9.15.5+sha512.845196026aab1cc3f098a0474b64dfbab2afe7a1b4e91dd86895d8e4aa32a7a6d03049e2d0ad770bbe4de023a7122fb68c1a1d6e0d033c7076085f9d5d4800d4"
+	"packageManager": "pnpm@9.15.9"
 }
