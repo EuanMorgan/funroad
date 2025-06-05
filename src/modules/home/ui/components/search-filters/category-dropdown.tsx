@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { SubcategoryMenu } from "~/app/(app)/(home)/search-filters/subcategory-menu";
-import type { CategoriesGetManyOutput } from "~/app/(app)/(home)/search-filters/types";
-import { useDropdownPosition } from "~/app/(app)/(home)/search-filters/use-dropdown-position";
+
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
-interface CategoryDropdownProps {
-	category: CategoriesGetManyOutput[number];
+import type { CategoriesGetManyOutput } from "~/modules/home/ui/components/search-filters/types";
+
+import { SubcategoryMenu } from "./subcategory-menu";
+
+interface Props {
+	category: CategoriesGetManyOutput[1];
 	isActive?: boolean;
 	isNavigationHovered?: boolean;
 }
@@ -18,34 +20,25 @@ export const CategoryDropdown = ({
 	category,
 	isActive,
 	isNavigationHovered,
-}: CategoryDropdownProps) => {
+}: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
-
 	const dropdownRef = useRef<HTMLDivElement>(null);
-
-	const { getDropdownPosition } = useDropdownPosition(dropdownRef);
 
 	const onMouseEnter = () => {
 		if (category.subcategories) {
+			console.log("hello");
 			setIsOpen(true);
 		}
 	};
 
 	const onMouseLeave = () => setIsOpen(false);
 
-	const dropdownPosition = getDropdownPosition();
-
-	const toggleDropdown = () => {
-		if (category.subcategories) {
-			setIsOpen(!isOpen);
-		}
-	};
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-		if (event.key === "Enter" || event.key === " ") {
-			event.preventDefault();
-			toggleDropdown();
-		}
-	};
+	// TODO: Potentially improve mobile
+	// const toggleDropdown = () => {
+	//   if (category.subcategories?.docs?.length) {
+	//     setIsOpen(!isOpen);
+	//   }
+	// };
 
 	return (
 		<div
@@ -53,13 +46,12 @@ export const CategoryDropdown = ({
 			ref={dropdownRef}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			// Improve accessibility mobile / keyboard users
-			onClick={toggleDropdown}
-			onKeyDown={handleKeyDown}
+			// onClick={toggleDropdown}
 		>
 			<div className="relative">
 				<Button
-					variant={"elevated"}
+					asChild
+					variant="elevated"
 					className={cn(
 						"h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
 						isActive && !isNavigationHovered && "bg-white border-primary",
@@ -71,7 +63,6 @@ export const CategoryDropdown = ({
 						{category.name}
 					</Link>
 				</Button>
-
 				{category.subcategories && category.subcategories.length > 0 && (
 					<div
 						className={cn(
@@ -82,11 +73,7 @@ export const CategoryDropdown = ({
 				)}
 			</div>
 
-			<SubcategoryMenu
-				category={category}
-				isOpen={isOpen}
-				position={dropdownPosition}
-			/>
+			<SubcategoryMenu category={category} isOpen={isOpen} />
 		</div>
 	);
 };
