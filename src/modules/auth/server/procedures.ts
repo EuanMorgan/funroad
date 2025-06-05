@@ -1,7 +1,5 @@
 import { TRPCError } from "@trpc/server";
 import { cookies as getCookies, headers as getHeaders } from "next/headers";
-import { z } from "zod";
-import { AUTH_COOKIE } from "~/modules/auth/constants";
 import { loginSchema, registerSchema } from "~/modules/auth/schemas";
 import { login } from "~/modules/auth/server/helpers";
 import { baseProcedure, createTRPCRouter } from "~/trpc/init";
@@ -14,7 +12,7 @@ export const authRouter = createTRPCRouter({
 	}),
 	logout: baseProcedure.mutation(async ({ ctx }) => {
 		const cookies = await getCookies();
-		cookies.delete(AUTH_COOKIE);
+		cookies.delete(`${ctx.payload.config.cookiePrefix}-token`);
 	}),
 	register: baseProcedure
 		.input(registerSchema)

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -47,12 +47,15 @@ export const SignUpView = () => {
 
 	const trpc = useTRPC();
 
+	const queryClient = useQueryClient();
+
 	const register = useMutation(
 		trpc.auth.register.mutationOptions({
 			onError: (error) => {
 				toast.error(error.message);
 			},
-			onSuccess: () => {
+			onSuccess: async () => {
+				await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
 				router.push("/");
 			},
 		}),
