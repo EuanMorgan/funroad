@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/client";
 import "./globals.css";
+import { Toaster } from "~/components/ui/sonner";
 import { getQueryClient } from "~/trpc/server";
 
 const dmSans = DM_Sans({
@@ -26,6 +27,7 @@ export default function RootLayout({
 				<TRPCReactProvider>
 					{children}
 					<ReactQueryDevtools />
+					<Toaster />
 				</TRPCReactProvider>
 			</body>
 		</html>

@@ -66,7 +66,7 @@
         "tailwind-merge": "^3.2.0",
         "tw-animate-css": "^1.2.5",
         "vaul": "^1.1.2",
-        "zod": "^3.24.3",
+        "zod": "^3.25.51",
       },
       "devDependencies": {
         "@biomejs/biome": "1.9.4",
@@ -1470,7 +1470,7 @@
 
     "yjs": ["yjs@13.6.26", "", { "dependencies": { "lib0": "^0.2.99" } }, "sha512-wiARO3wixu7mtoRP5f7LqpUtsURP9SmNgXUt3RlnZg4qDuF7dUjthwIvwxIDmK55dPw4Wl4QdW5A3ag0atwu7g=="],
 
-    "zod": ["zod@3.24.3", "", {}, "sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg=="],
+    "zod": ["zod@3.25.51", "", {}, "sha512-TQSnBldh+XSGL+opiSIq0575wvDPqu09AqWe1F7JhUMKY+M91/aGlK4MhpVNO7MgYfHcVCB1ffwAUTJzllKJqg=="],
 
     "zwitch": ["zwitch@2.0.4", "", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
 
