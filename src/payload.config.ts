@@ -30,6 +30,7 @@ export default buildConfig({
 	db: mongooseAdapter({
 		url: process.env.DATABASE_URI || "",
 	}),
+	cookiePrefix: "funroad",
 	sharp,
 	plugins: [
 		payloadCloudPlugin(),

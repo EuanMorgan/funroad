@@ -1,7 +1,7 @@
+import "server-only";
 import { TRPCError } from "@trpc/server";
 import { cookies as getCookies } from "next/headers";
 import type { Payload } from "payload";
-import { AUTH_COOKIE } from "~/modules/auth/constants";
 
 export const login = async (
 	payload: Payload,
@@ -21,7 +21,7 @@ export const login = async (
 
 	const cookies = await getCookies();
 	cookies.set({
-		name: AUTH_COOKIE,
+		name: `${payload.config.cookiePrefix}-token`,
 		value: data.token,
 		httpOnly: true,
 		secure: process.env.NODE_ENV === "production",
