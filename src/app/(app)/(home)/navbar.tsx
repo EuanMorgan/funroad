@@ -6,7 +6,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { NavbarSidebar } from "~/app/(app)/(home)/navbar-sidebar";
-
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
@@ -94,7 +93,9 @@ export const Navbar = () => {
 					variant={"secondary"}
 					className="border-l border-t-0 border-b-0 border-r-0 rounded-none px-12 h-full bg-white hover:bg-pink-400 transition-colors text-lg"
 				>
-					<Link href="/sign-in">Login</Link>
+					<Link prefetch href="/sign-in">
+						Login
+					</Link>
 				</Button>
 
 				<Button
@@ -102,7 +103,9 @@ export const Navbar = () => {
 					variant={"secondary"}
 					className="border-l border-t-0 border-b-0 border-r-0 rounded-none px-12 h-full bg-black text-white hover:text-black hover:bg-pink-400 transition-colors text-lg"
 				>
-					<Link href="/sign-up">Start Selling</Link>
+					<Link prefetch href="/sign-up">
+						Start Selling
+					</Link>
 				</Button>
 			</div>
 
