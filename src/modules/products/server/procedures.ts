@@ -32,7 +32,7 @@ export const productsRouter = createTRPCRouter({
 				const formattedCategoriesData = categoriesData.docs.map((doc) => ({
 					...doc,
 					subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
-						// Because of "depth: 1" we are confident "doc" will be a type of "Category"
+						// Because of "depth: 1" we are confident "doc" will be a type of "Category" and not string | "Category"
 						...(doc as Category),
 					})),
 				}));
