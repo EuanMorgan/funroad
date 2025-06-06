@@ -9,8 +9,8 @@ import { useQuery } from "@tanstack/react-query";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import type { CategoriesGetManyOutput } from "~/app/(app)/(home)/search-filters/types";
 import { ScrollArea } from "~/components/ui/scroll-area";
+import type { CategoriesGetManyOutput } from "~/modules/home/ui/components/search-filters/types";
 import { useTRPC } from "~/trpc/client";
 
 interface CategoriesSidebarProps {

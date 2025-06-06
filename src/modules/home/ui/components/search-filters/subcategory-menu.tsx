@@ -1,17 +1,15 @@
 import Link from "next/link";
-import type { CategoriesGetManyOutput } from "~/app/(app)/(home)/search-filters/types";
 
-interface SubcategoryMenuProps {
+import type { Category } from "~/payload-types";
+
+import type { CategoriesGetManyOutput } from "~/modules/home/ui/components/search-filters/types";
+
+interface Props {
 	category: CategoriesGetManyOutput[number];
 	isOpen: boolean;
-	position: { top: number; left: number };
 }
 
-export const SubcategoryMenu = ({
-	category,
-	isOpen,
-	position,
-}: SubcategoryMenuProps) => {
+export const SubcategoryMenu = ({ category, isOpen }: Props) => {
 	if (
 		!isOpen ||
 		!category.subcategories ||
@@ -24,16 +22,17 @@ export const SubcategoryMenu = ({
 
 	return (
 		<div
-			className="fixed z-100"
-			style={{ top: position.top, left: position.left }}
+			className="absolute z-100"
+			style={{
+				top: "100%",
+				left: 0,
+			}}
 		>
 			{/* Invisible bridge to maintain hover */}
 			<div className="h-3 w-60" />
 			<div
-				style={{
-					backgroundColor,
-				}}
-				className="w-60 text-black rounded-md overflow-hidden border shadow-[4px_4px_0_0_rgba(0,0,0,1)] -translate-x-[2px] -translate-y-[2px]"
+				style={{ backgroundColor }}
+				className="w-60 text-black rounded-md overflow-hidden border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[2px] -translate-y-[2px]"
 			>
 				<div>
 					{category.subcategories?.map((subcategory) => (
@@ -42,7 +41,7 @@ export const SubcategoryMenu = ({
 							href={`/${category.slug}/${subcategory.slug}`}
 							className="w-full text-left p-4 hover:bg-black hover:text-white flex justify-between items-center underline font-medium"
 						>
-							<p>{subcategory.name}</p>
+							{subcategory.name}
 						</Link>
 					))}
 				</div>

@@ -3,9 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { BookmarkCheckIcon, ListFilterIcon, SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { CategoriesSidebar } from "~/app/(app)/(home)/search-filters/categories-sidebar";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import { CategoriesSidebar } from "~/modules/home/ui/components/search-filters/categories-sidebar";
 import { useTRPC } from "~/trpc/client";
 
 interface SearchInputProps {

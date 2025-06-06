@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import { Footer } from "~/app/(app)/(home)/footer";
-import { Navbar } from "~/app/(app)/(home)/navbar";
+import { Footer } from "~/modules/home/ui/components/footer";
+import { Navbar } from "~/modules/home/ui/components/navbar";
 import {
 	SearchFilters,
 	SearchFiltersSkeleton,
-} from "~/app/(app)/(home)/search-filters";
+} from "~/modules/home/ui/components/search-filters";
 import { HydrateClient, getQueryClient, trpc } from "~/trpc/server";
 export default async function HomeLayout({
 	children,
