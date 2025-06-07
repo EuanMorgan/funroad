@@ -13,7 +13,9 @@ export const productsRouter = createTRPCRouter({
 			}),
 		)
 		.query(async ({ ctx, input }) => {
-			const where: Where = {};
+			const where: Where = {
+				price: {},
+			};
 
 			if (input.minPrice) {
 				where.price = {
