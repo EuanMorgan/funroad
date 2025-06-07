@@ -8,10 +8,29 @@ export const productsRouter = createTRPCRouter({
 		.input(
 			z.object({
 				categorySlug: z.string().nullish(),
+				minPrice: z.string().nullish(),
+				maxPrice: z.string().nullish(),
 			}),
 		)
 		.query(async ({ ctx, input }) => {
-			const where: Where = {};
+			const where: Where = {
+				price: {},
+			};
+
+			if (input.minPrice) {
+				where.price = {
+					...where.price,
+					greater_than_equal: input.minPrice,
+				};
+			}
+
+			if (input.maxPrice) {
+				where.price = {
+					...where.price,
+					less_than_equal: input.maxPrice,
+				};
+			}
+
 			// If categorySlug is provided, we fetch it
 			// Then, if it has subcategories, we grab all their slugs
 			// This ensures that when we are in a parent category we fetch
@@ -47,10 +66,10 @@ export const productsRouter = createTRPCRouter({
 							(subcategory) => subcategory.slug,
 						),
 					);
+					where["category.slug"] = {
+						in: [parentCategory.slug, ...subcategorySlugs],
+					};
 				}
-				where["category.slug"] = {
-					in: [parentCategory.slug, ...subcategorySlugs],
-				};
 			}
 			const data = await ctx.payload.find({
 				collection: "products",
