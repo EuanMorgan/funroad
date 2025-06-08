@@ -7,7 +7,7 @@ import { useTRPC } from "~/trpc/client";
 export const ProductList = ({ categorySlug }: { categorySlug: string }) => {
 	const trpc = useTRPC();
 
-	const [filters, setFilters] = useProductFilters();
+	const { filters } = useProductFilters();
 
 	const { data } = useSuspenseQuery(
 		trpc.products.getMany.queryOptions({
