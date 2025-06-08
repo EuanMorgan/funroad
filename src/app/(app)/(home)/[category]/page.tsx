@@ -1,4 +1,7 @@
+import type { SearchParams } from "nuqs/server";
+
 import { Suspense } from "react";
+import { loadProductFilters } from "~/modules/products/hooks/use-product-filters";
 import { ProductFilters } from "~/modules/products/ui/components/product-filters";
 import {
 	ProductList,
@@ -10,14 +13,19 @@ interface Props {
 	params: Promise<{
 		category: string;
 	}>;
+	searchParams: Promise<SearchParams>;
 }
 
-export default async function CategoryPage({ params }: Props) {
+export default async function CategoryPage({ params, searchParams }: Props) {
 	const { category } = await params;
+	const filters = await loadProductFilters(searchParams);
+
+	console.log({ filters }, "rsc");
 
 	void prefetch(
 		trpc.products.getMany.queryOptions({
 			categorySlug: category,
+			...filters,
 		}),
 	);
 
