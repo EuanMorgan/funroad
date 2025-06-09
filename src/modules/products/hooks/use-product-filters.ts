@@ -1,15 +1,14 @@
-import { parseAsString, useQueryStates } from "nuqs";
+import { useQueryStates } from "nuqs";
+import { params } from "~/modules/products/search-params";
 
 export const useProductFilters = () => {
-	return useQueryStates({
-		categorySlug: parseAsString.withOptions({
-			clearOnDefault: true,
-		}),
-		minPrice: parseAsString.withOptions({
-			clearOnDefault: true,
-		}),
-		maxPrice: parseAsString.withOptions({
-			clearOnDefault: true,
-		}),
-	});
+	const [filters, setFilters] = useQueryStates(params);
+	const clear = () => {
+		setFilters({
+			minPrice: "",
+			maxPrice: "",
+			tags: [],
+		});
+	};
+	return { filters, setFilters, clear };
 };
