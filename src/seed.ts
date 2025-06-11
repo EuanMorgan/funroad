@@ -150,6 +150,24 @@ const seed = async () => {
 	const payload = await getPayload({ config: configPromise });
 	mainSpinner.succeed(chalk.green("Payload CMS initialized successfully"));
 
+	// create admin user
+	// Spinner for admin user
+	const adminUserSpinner = ora({
+		text: "Creating admin user",
+		color: "yellow",
+	}).start();
+
+	await payload.create({
+		collection: "users",
+		data: {
+			email: "admin@funroad.euanmorgan.uk",
+			password: "demo",
+			roles: ["super-admin"],
+			username: "admin",
+		},
+	});
+	adminUserSpinner.succeed(chalk.green("Admin user created successfully"));
+
 	const totalCategories = categories.length;
 	let completedCategories = 0;
 

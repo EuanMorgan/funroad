@@ -20,7 +20,7 @@ export const ProductList = ({ categorySlug }: { categorySlug: string }) => {
 		useSuspenseInfiniteQuery(
 			trpc.products.getMany.infiniteQueryOptions(
 				{
-					categorySlug,
+					categorySlug: categorySlug ? categorySlug : undefined,
 					...filters,
 				},
 				{
