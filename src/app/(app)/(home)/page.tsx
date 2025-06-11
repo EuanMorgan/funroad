@@ -1,11 +1,25 @@
-"use client";
+import type { SearchParams } from "nuqs/server";
 
-import { useQuery } from "@tanstack/react-query";
-import { useTRPC } from "~/trpc/client";
+import { loadProductFilters } from "~/modules/products/search-params";
+import ProductListView from "~/modules/products/ui/views/product-list-view";
+import { HydrateClient, prefetch, trpc } from "~/trpc/server";
 
-export default function Home() {
-	const trpc = useTRPC();
-	const { data: session } = useQuery(trpc.auth.session.queryOptions());
-	console.log(session);
-	return <div>{JSON.stringify(session?.user, null, 2)}</div>;
+interface Props {
+	searchParams: Promise<SearchParams>;
+}
+
+export default async function CategoryPage({ searchParams }: Props) {
+	const filters = await loadProductFilters(searchParams);
+
+	void prefetch(
+		trpc.products.getMany.infiniteQueryOptions({
+			...filters,
+		}),
+	);
+
+	return (
+		<HydrateClient>
+			<ProductListView />
+		</HydrateClient>
+	);
 }
