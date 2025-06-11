@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import type { Category } from "~/payload-types";
-
 import type { CategoriesGetManyOutput } from "~/modules/home/ui/components/search-filters/types";
 
 interface Props {

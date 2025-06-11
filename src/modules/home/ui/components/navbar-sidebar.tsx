@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Dialog } from "~/components/ui/dialog";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import {
 	Sheet,
