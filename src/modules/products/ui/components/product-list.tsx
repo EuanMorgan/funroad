@@ -1,9 +1,6 @@
 "use client";
 
-import {
-	useSuspenseInfiniteQuery,
-	useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { InboxIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { DEFAULT_PAGINATION_LIMIT } from "~/constants";
@@ -33,7 +30,7 @@ export const ProductList = ({ categorySlug }: { categorySlug: string }) => {
 			),
 		);
 
-	if (data.pages[0]?.docs.length === 0) {
+	if (data.pages.every((p) => p.docs.length === 0)) {
 		return (
 			<div className="border border-black border-dashed flex items-center justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
 				<InboxIcon />

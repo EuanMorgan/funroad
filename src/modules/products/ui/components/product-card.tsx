@@ -1,7 +1,6 @@
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
 	id: string;
@@ -24,8 +23,6 @@ export const ProductCard = ({
 	reviewCount,
 	price,
 }: ProductCardProps) => {
-	const router = useRouter();
-
 	return (
 		<Link href={`/products/${id}`}>
 			<div className="hover:shadow-[4px_4px_0_0_rgba(0,0,0,1)] transition-shadow border rounded-md bg-white overflow-hidden h-full flex flex-col">

@@ -1,4 +1,4 @@
-import { type RefObject, useRef } from "react";
+import type { RefObject } from "react";
 
 export const useDropdownPosition = (
 	ref: RefObject<HTMLElement | null> | RefObject<HTMLDivElement>,

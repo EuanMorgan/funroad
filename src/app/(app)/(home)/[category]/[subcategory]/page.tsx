@@ -1,10 +1,5 @@
 import type { SearchParams } from "nuqs";
-import { Suspense } from "react";
 import { loadProductFilters } from "~/modules/products/search-params";
-import {
-	ProductList,
-	ProductListSkeleton,
-} from "~/modules/products/ui/components/product-list";
 import ProductListView from "~/modules/products/ui/views/product-list-view";
 import { HydrateClient, prefetch, trpc } from "~/trpc/server";
 
