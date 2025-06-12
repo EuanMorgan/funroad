@@ -2,7 +2,7 @@ import type { Sort, Where } from "payload";
 import { z } from "zod";
 import { DEFAULT_PAGINATION_LIMIT, MAX_PAGINATION_LIMIT } from "~/constants";
 import { sortValues } from "~/modules/products/search-params";
-import type { Category, Media } from "~/payload-types";
+import type { Category, Media, Tenant } from "~/payload-types";
 import { baseProcedure, createTRPCRouter } from "~/trpc/init";
 
 export const productsRouter = createTRPCRouter({
@@ -19,12 +19,19 @@ export const productsRouter = createTRPCRouter({
 				maxPrice: z.string().nullish(),
 				tags: z.array(z.string()).nullish(),
 				sort: z.enum(sortValues).nullish(),
+				tenantSlug: z.string().nullish(),
 			}),
 		)
 		.query(async ({ ctx, input }) => {
 			const where: Where = {
 				price: {},
 			};
+
+			if (input.tenantSlug) {
+				where["tenant.slug"] = {
+					equals: input.tenantSlug,
+				};
+			}
 
 			// todo: these are just dummy sorts for now, will revisit soon and add proper ones
 			let sort: Sort = "-createdAt";
@@ -57,7 +64,7 @@ export const productsRouter = createTRPCRouter({
 				const categoriesData = await ctx.payload.find({
 					collection: "categories",
 					limit: 1,
-					depth: 1,
+					depth: 1, // Populate categoy, image and tenant
 					pagination: false,
 					where: {
 						slug: {
@@ -98,7 +105,7 @@ export const productsRouter = createTRPCRouter({
 
 			const data = await ctx.payload.find({
 				collection: "products",
-				depth: 1, // Populate category and image
+				depth: 2, // Populate category and image
 				where,
 				sort,
 				page: input.cursor,
@@ -110,6 +117,7 @@ export const productsRouter = createTRPCRouter({
 				docs: data.docs.map((doc) => ({
 					...doc,
 					image: doc.image as unknown as Media | null,
+					tenant: doc.tenant as unknown as Tenant & { image: Media | null },
 				})),
 			};
 		}),
