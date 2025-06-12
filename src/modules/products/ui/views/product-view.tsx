@@ -1,9 +1,9 @@
 "use client";
 
-// TODO: Add real ratings
-
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { LinkIcon, StarIcon } from "lucide-react";
+// TODO: Add real ratings
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -11,6 +11,22 @@ import { StarRating } from "~/components/star-rating";
 import { Button } from "~/components/ui/button";
 import { Progress } from "~/components/ui/progress";
 import { formatCurrency, generateTenantURL } from "~/lib/utils";
+
+// Cart Button uses local storage, so we can dynamically import it without SSR to avoid hydration errors
+const CartButton = dynamic(
+	() =>
+		import("~/modules/products/ui/components/cart-button").then(
+			(mod) => mod.CartButton,
+		),
+	{
+		ssr: false,
+		loading: () => (
+			<Button disabled className="flex-1 bg-pink-400">
+				Add to cart
+			</Button>
+		),
+	},
+);
 import { useTRPC } from "~/trpc/client";
 
 interface ProductViewProps {
@@ -101,9 +117,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
 						<div className="border-t lg:border-t-0 lg:border-l h-full">
 							<div className="flex flex-col gap-4 p-6 border-b">
 								<div className="flex flex-row items-center gap-2">
-									<Button variant={"elevated"} className="flex-1 bg-pink-400">
-										Add to cart
-									</Button>
+									<CartButton productId={productId} tenantSlug={tenantSlug} />
 									<Button
 										className="size-12"
 										variant={"elevated"}
