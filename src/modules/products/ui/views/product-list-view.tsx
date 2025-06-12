@@ -8,9 +8,15 @@ import { ProductSort } from "~/modules/products/ui/components/product-sort";
 
 interface Props {
 	categorySlug?: string;
+	tenantSlug?: string;
+	narrowView?: boolean;
 }
 
-export default async function ProductListView({ categorySlug }: Props) {
+export default async function ProductListView({
+	categorySlug,
+	tenantSlug,
+	narrowView = false,
+}: Props) {
 	return (
 		<div className="px-4 lg:px-12 py-8 flex flex-col gap-4">
 			<div className="flex flex-col lg:flex-row lg:items-center gap-y-2 lg:gap-y-0 justify-between">
@@ -22,8 +28,12 @@ export default async function ProductListView({ categorySlug }: Props) {
 					<ProductFilters />
 				</div>
 				<div className="lg:col-span-4 xl:col-span-6">
-					<Suspense fallback={<ProductListSkeleton />}>
-						<ProductList categorySlug={categorySlug ?? ""} />
+					<Suspense fallback={<ProductListSkeleton narrowView={narrowView} />}>
+						<ProductList
+							categorySlug={categorySlug ?? ""}
+							tenantSlug={tenantSlug ?? ""}
+							narrowView={narrowView}
+						/>
 					</Suspense>
 				</div>
 			</div>

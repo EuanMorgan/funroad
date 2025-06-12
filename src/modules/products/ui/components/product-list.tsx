@@ -4,6 +4,7 @@ import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { InboxIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { DEFAULT_PAGINATION_LIMIT } from "~/constants";
+import { cn } from "~/lib/utils";
 import { useProductFilters } from "~/modules/products/hooks/use-product-filters";
 import {
 	ProductCard,
@@ -11,7 +12,15 @@ import {
 } from "~/modules/products/ui/components/product-card";
 import { useTRPC } from "~/trpc/client";
 
-export const ProductList = ({ categorySlug }: { categorySlug: string }) => {
+export const ProductList = ({
+	categorySlug,
+	tenantSlug,
+	narrowView = false,
+}: {
+	categorySlug: string;
+	tenantSlug: string;
+	narrowView?: boolean;
+}) => {
 	const trpc = useTRPC();
 
 	const { filters } = useProductFilters();
@@ -21,6 +30,7 @@ export const ProductList = ({ categorySlug }: { categorySlug: string }) => {
 			trpc.products.getMany.infiniteQueryOptions(
 				{
 					categorySlug: categorySlug ? categorySlug : undefined,
+					tenantSlug: tenantSlug ? tenantSlug : undefined,
 					...filters,
 				},
 				{
@@ -40,7 +50,12 @@ export const ProductList = ({ categorySlug }: { categorySlug: string }) => {
 	}
 	return (
 		<>
-			<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+			<div
+				className={cn(
+					"grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4",
+					narrowView && "lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3",
+				)}
+			>
 				{data?.pages
 					.flatMap((page) => page.docs)
 					.map((product) => (
@@ -49,8 +64,8 @@ export const ProductList = ({ categorySlug }: { categorySlug: string }) => {
 							id={product.id}
 							name={product.name}
 							imageUrl={product.image?.url}
-							authorUsername="Euan"
-							authorImageUrl={undefined}
+							tenantSlug={product.tenant?.slug}
+							tenantImageUrl={product.tenant?.image?.url}
 							reviewRating={3}
 							reviewCount={5}
 							price={product.price}
@@ -73,9 +88,16 @@ export const ProductList = ({ categorySlug }: { categorySlug: string }) => {
 	);
 };
 
-export const ProductListSkeleton = () => {
+export const ProductListSkeleton = ({
+	narrowView = false,
+}: { narrowView?: boolean }) => {
 	return (
-		<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+		<div
+			className={cn(
+				"grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4",
+				narrowView && "lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3",
+			)}
+		>
 			{Array.from({ length: DEFAULT_PAGINATION_LIMIT }).map((_, i) => (
 				// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 				<ProductCardSkeleton key={i} />

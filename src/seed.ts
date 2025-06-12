@@ -157,6 +157,15 @@ const seed = async () => {
 		color: "yellow",
 	}).start();
 
+	const adminTenant = await payload.create({
+		collection: "tenants",
+		data: {
+			name: "admin",
+			slug: "admin",
+			stripeAccountId: "test",
+		},
+	});
+
 	await payload.create({
 		collection: "users",
 		data: {
@@ -164,6 +173,11 @@ const seed = async () => {
 			password: "demo",
 			roles: ["super-admin"],
 			username: "admin",
+			tenants: [
+				{
+					tenant: adminTenant.id,
+				},
+			],
 		},
 	});
 	adminUserSpinner.succeed(chalk.green("Admin user created successfully"));
