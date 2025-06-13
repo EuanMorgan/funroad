@@ -1,7 +1,7 @@
 "use client";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { InboxIcon } from "lucide-react";
+import { EmptyState } from "~/components/empty-state";
 import { Button } from "~/components/ui/button";
 import { DEFAULT_PAGINATION_LIMIT } from "~/constants";
 import { cn } from "~/lib/utils";
@@ -41,12 +41,7 @@ export const ProductList = ({
 		);
 
 	if (data.pages.every((p) => p.docs.length === 0)) {
-		return (
-			<div className="border border-black border-dashed flex items-center justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg">
-				<InboxIcon />
-				<p className="text-base font-medium">No products found</p>
-			</div>
-		);
+		return <EmptyState message="No products found" />;
 	}
 	return (
 		<>
