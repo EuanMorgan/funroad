@@ -1,3 +1,4 @@
+import { headers as getHeaders } from "next/headers";
 import type { Sort, Where } from "payload";
 import { z } from "zod";
 import { DEFAULT_PAGINATION_LIMIT, MAX_PAGINATION_LIMIT } from "~/constants";
@@ -13,16 +14,47 @@ export const productsRouter = createTRPCRouter({
 			}),
 		)
 		.query(async ({ ctx, input }) => {
+			const headers = await getHeaders();
+
+			const session = await ctx.payload.auth({ headers });
+
 			const product = await ctx.payload.findByID({
 				collection: "products",
 				id: input.id,
 				depth: 2, // load product image, tenant and tenant image
 			});
 
+			let isPurchased = false;
+
+			if (session.user) {
+				const ordersData = await ctx.payload.find({
+					collection: "orders",
+					pagination: false,
+					limit: 1,
+					where: {
+						and: [
+							{
+								product: {
+									equals: input.id,
+								},
+							},
+							{
+								user: {
+									equals: session.user.id,
+								},
+							},
+						],
+					},
+				});
+
+				isPurchased = ordersData.totalDocs > 0;
+			}
+
 			return {
 				...product,
 				image: product.image as unknown as Media | null,
 				tenant: product.tenant as unknown as Tenant & { image: Media | null },
+				isPurchased,
 			};
 		}),
 	getMany: baseProcedure
