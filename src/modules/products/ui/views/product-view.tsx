@@ -136,6 +136,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
 										className="size-12"
 										variant={"elevated"}
 										onClick={() => {
+											setIsCopied(true);
 											navigator.clipboard.writeText(window.location.href);
 											toast.success("Link copied to clipboard");
 
