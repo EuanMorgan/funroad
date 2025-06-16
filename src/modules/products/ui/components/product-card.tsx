@@ -4,8 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { formatCurrency, generateTenantURL } from "~/lib/utils";
 
-// TODO: Add real ratings
-
 interface ProductCardProps {
 	id: string;
 	name: string;
@@ -48,7 +46,7 @@ export const ProductCard = ({
 				</div>
 				<div className="p-4 border-y flex flex-col gap-3 flex-1">
 					<h2 className="text-lg font-medium line-clamp-4">{name}</h2>
-					{/* Todo: redirect to user shop */}
+
 					<button
 						type="button"
 						className="flex items-center gap-2 cursor-pointer hover:opacity-50"

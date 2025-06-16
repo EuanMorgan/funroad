@@ -3,6 +3,7 @@ import type { Sort, Where } from "payload";
 import { z } from "zod";
 import { DEFAULT_PAGINATION_LIMIT, MAX_PAGINATION_LIMIT } from "~/constants";
 import { sortValues } from "~/modules/products/search-params";
+import { getSummarisedReviews } from "~/modules/reviews/servers/helpers";
 import type { Category, Media, Tenant } from "~/payload-types";
 import { baseProcedure, createTRPCRouter } from "~/trpc/init";
 
@@ -50,11 +51,56 @@ export const productsRouter = createTRPCRouter({
 				isPurchased = ordersData.totalDocs > 0;
 			}
 
+			const reviewsData = await ctx.payload.find({
+				collection: "reviews",
+				pagination: false,
+				where: {
+					product: {
+						equals: input.id,
+					},
+				},
+			});
+
+			const reviewRating =
+				reviewsData.docs.length > 0
+					? reviewsData.docs.reduce((acc, review) => acc + review.rating, 0) /
+						reviewsData.totalDocs
+					: 0;
+
+			const ratingDistribution: Record<number, number> = {
+				5: 0,
+				4: 0,
+				3: 0,
+				2: 0,
+				1: 0,
+			};
+
+			if (reviewsData.totalDocs > 0) {
+				for (const review of reviewsData.docs) {
+					const rating = review.rating;
+
+					if (rating >= 1 && rating <= 5) {
+						ratingDistribution[rating] = (ratingDistribution[rating] ?? 0) + 1;
+					}
+				}
+
+				for (const key in Object.keys(ratingDistribution)) {
+					const rating = Number(key);
+					const count = ratingDistribution[rating] || 0;
+					ratingDistribution[rating] = Math.round(
+						(count / reviewsData.totalDocs) * 100,
+					);
+				}
+			}
+
 			return {
 				...product,
 				image: product.image as unknown as Media | null,
 				tenant: product.tenant as unknown as Tenant & { image: Media | null },
 				isPurchased,
+				reviewRating,
+				reviewCount: reviewsData.totalDocs,
+				ratingDistribution,
 			};
 		}),
 	getMany: baseProcedure
@@ -163,9 +209,13 @@ export const productsRouter = createTRPCRouter({
 				limit: input.limit,
 			});
 
+			const dataWithSummarisedReviews = await getSummarisedReviews(
+				data,
+				ctx.payload,
+			);
 			return {
 				...data,
-				docs: data.docs.map((doc) => ({
+				docs: dataWithSummarisedReviews.map((doc) => ({
 					...doc,
 					image: doc.image as unknown as Media | null,
 					tenant: doc.tenant as unknown as Tenant & { image: Media | null },

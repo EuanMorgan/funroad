@@ -29,7 +29,7 @@ export const SearchInput = ({ disabled }: SearchInputProps) => {
 					disabled={disabled}
 				/>
 			</div>
-			{/* TODO: Add categories view all button */}
+
 			<Button
 				variant={"elevated"}
 				className="size-12 shrink-0 flex lg:hidden"
@@ -39,7 +39,7 @@ export const SearchInput = ({ disabled }: SearchInputProps) => {
 			>
 				<ListFilterIcon />
 			</Button>
-			{/* TODO: Add library button */}
+
 			{session.data?.user && (
 				<Button asChild variant={"elevated"}>
 					<Link prefetch href="/library">
