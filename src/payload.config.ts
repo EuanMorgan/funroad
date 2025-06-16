@@ -16,6 +16,7 @@ import { Products } from "./collections/Products";
 import { Tags } from "./collections/Tags";
 import { Tenants } from "./collections/Tenants";
 import { Orders } from "./collections/Orders";
+import { Reviews } from "./collections/Reviews";
 import { Config } from "~/payload-types";
 import { env } from "~/env";
 
@@ -29,7 +30,7 @@ export default buildConfig({
 			baseDir: path.resolve(dirname),
 		},
 	},
-	collections: [Users, Media, Categories, Products, Tags, Tenants, Orders],
+	collections: [Users, Media, Categories, Products, Tags, Tenants, Orders, Reviews],
 	editor: lexicalEditor(),
 	secret: env.PAYLOAD_SECRET,
 	typescript: {

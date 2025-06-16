@@ -1,6 +1,11 @@
 "use client";
 
-import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
+import {
+	keepPreviousData,
+	useMutation,
+	useQuery,
+	useQueryClient,
+} from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -20,6 +25,7 @@ interface CheckoutViewProps {
 export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
 	const trpc = useTRPC();
 	const { productIds, removeProduct, clearTenantCart } = useCart(tenantSlug);
+	const queryClient = useQueryClient();
 
 	const [states, setStates] = useCheckoutStates();
 
@@ -74,10 +80,17 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
 			setStates({ success: false, cancel: false });
 			clearTenantCart();
 
-			// TODO: Invalidate library
-			router.push("/products");
+			queryClient.invalidateQueries(trpc.library.getMany.infiniteQueryFilter());
+			router.push("/library");
 		}
-	}, [states.success, clearTenantCart, router, setStates]);
+	}, [
+		states.success,
+		clearTenantCart,
+		router,
+		setStates,
+		queryClient,
+		trpc.library.getMany,
+	]);
 
 	if (data?.totalDocs === 0) {
 		return (
