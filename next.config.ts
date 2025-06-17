@@ -11,6 +11,18 @@ const nextConfig: NextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "funroad.euanmorgan.uk",
+			},
+			{
+				protocol: "http",
+				hostname: "localhost",
+			},
+		],
+	},
 	output: "standalone",
 	transpilePackages: ["@t3-oss/env-nextjs", "@t3-oss/env-core"],
 };
