@@ -4,11 +4,14 @@ import { useParams } from "next/navigation";
 import { DEFAULT_BG_COLOR } from "~/modules/home/constants";
 import { BreadcrumbNavigation } from "~/modules/home/ui/components/search-filters/breadcrumb-navigation";
 import { Categories } from "~/modules/home/ui/components/search-filters/categories";
+import { useProductFilters } from "~/modules/products/hooks/use-product-filters";
 import { useTRPC } from "~/trpc/client";
 import { SearchInput } from "./search-input";
 
 export const SearchFilters = () => {
 	const trpc = useTRPC();
+
+	const { filters, setFilters } = useProductFilters();
 
 	const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
 
@@ -36,7 +39,11 @@ export const SearchFilters = () => {
 			className="px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full"
 			style={{ backgroundColor: activeCategoryColor }}
 		>
-			<SearchInput />
+			<SearchInput
+				defaultValue={filters.search}
+				setFilters={(val) => setFilters({ search: val })}
+			/>
+
 			<div className="hidden lg:block">
 				<Categories data={data} />
 			</div>
@@ -55,7 +62,7 @@ export const SearchFiltersSkeleton = () => {
 			className="px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full"
 			style={{ backgroundColor: "#F5F5F5" }}
 		>
-			<SearchInput disabled />
+			<SearchInput disabled defaultValue="" setFilters={() => {}} />
 			<div className="hidden lg:block">
 				<div className="h-11" />
 			</div>
