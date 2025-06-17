@@ -11,9 +11,7 @@ export const env = createEnv({
 	client: {
 		NEXT_PUBLIC_BASE_URL: z.string().url(),
 		NEXT_PUBLIC_ROOT_DOMAIN: z.string(),
-		NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING: z.boolean({
-			coerce: true,
-		}),
+		NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING: z.enum(["true", "false"]),
 	},
 	experimental__runtimeEnv: {
 		NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,

@@ -11,7 +11,7 @@ export function generateTenantURL(tenantSlug: string) {
 	const isSubdomainRoutingEnabled = env.NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING;
 
 	// In dev or subdomain routing is disabled use normal routing
-	if (isDev || !isSubdomainRoutingEnabled) {
+	if (isDev || isSubdomainRoutingEnabled === "false") {
 		return `${env.NEXT_PUBLIC_BASE_URL}/tenants/${tenantSlug}`;
 	}
 
