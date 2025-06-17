@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import ora from "ora";
 import { getPayload } from "payload";
+import { stripe } from "~/lib/stripe";
 import configPromise from "./payload.config";
 
 const categories = [
@@ -148,6 +149,9 @@ const seed = async () => {
 	}).start();
 
 	const payload = await getPayload({ config: configPromise });
+
+	const stripeAccount = await stripe.accounts.create({});
+
 	mainSpinner.succeed(chalk.green("Payload CMS initialized successfully"));
 
 	// create admin user
@@ -162,7 +166,7 @@ const seed = async () => {
 		data: {
 			name: "admin",
 			slug: "admin",
-			stripeAccountId: "test",
+			stripeAccountId: stripeAccount.id,
 		},
 	});
 

@@ -25,13 +25,17 @@ export async function POST(request: Request) {
 
 	console.log("🔔 Webhook received:", event.type);
 
-	const permittedEvents: string[] = ["checkout.session.completed"];
+	const permittedEvents = [
+		"checkout.session.completed",
+		"account.updated",
+	] as const satisfies Stripe.Event.Type[];
 
 	const payload = await getPayload({
 		config,
 	});
 
-	if (!permittedEvents.includes(event.type)) {
+	// biome-ignore lint/suspicious/noExplicitAny: Allow running includes against our narrow as const type
+	if (!permittedEvents.includes(event.type as any)) {
 		return NextResponse.json(
 			{
 				error: "Unauthorized event",
@@ -44,7 +48,7 @@ export async function POST(request: Request) {
 	let data;
 
 	try {
-		switch (event.type) {
+		switch (event.type as (typeof permittedEvents)[number]) {
 			case "checkout.session.completed": {
 				data = event.data.object as Stripe.Checkout.Session;
 				if (!data.metadata?.userId) {
@@ -65,6 +69,9 @@ export async function POST(request: Request) {
 					{
 						expand: ["line_items.data.price.product"],
 					},
+					{
+						stripeAccount: event.account,
+					},
 				);
 
 				const lineItems = expandedSession.line_items
@@ -81,14 +88,31 @@ export async function POST(request: Request) {
 							user: user.id,
 							product: item.price.product.metadata.id,
 							name: item.price.product.name,
+							stripeAccountId: event.account,
 						},
 					});
 				}
 
 				break;
 			}
-			default:
+			case "account.updated": {
+				data = event.data.object as Stripe.Account;
+
+				await payload.update({
+					collection: "tenants",
+					where: {
+						stripeAccountId: { equals: data.id },
+					},
+					data: {
+						stripeDetailsSubmitted: data.details_submitted,
+					},
+				});
+
+				break;
+			}
+			default: {
 				throw new Error(`Unhandled event type: ${event.type}`);
+			}
 		}
 	} catch (error) {
 		console.error("❌ Error processing event:", error);
