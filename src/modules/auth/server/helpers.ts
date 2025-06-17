@@ -2,6 +2,7 @@ import "server-only";
 import { TRPCError } from "@trpc/server";
 import { cookies as getCookies } from "next/headers";
 import type { Payload } from "payload";
+import { env } from "~/env";
 
 export const login = async (
 	payload: Payload,
@@ -18,19 +19,21 @@ export const login = async (
 			message: "Invalid email or password",
 		});
 	}
+	await setAuthCookie(payload, data.token);
 
+	return data;
+};
+
+export const setAuthCookie = async (payload: Payload, token: string) => {
 	const cookies = await getCookies();
 	cookies.set({
 		name: `${payload.config.cookiePrefix}-token`,
-		value: data.token,
+		value: token,
 		httpOnly: true,
 		secure: process.env.NODE_ENV === "production",
 		maxAge: 60 * 60 * 24 * 30, // 30 days
 		path: "/",
-		// sameSite: "none",
-		// domain:""
-		// TODO: Ensure cross-domain cookie sharing
+		sameSite: "none",
+		domain: env.NEXT_PUBLIC_ROOT_DOMAIN,
 	});
-
-	return data;
 };
