@@ -34,7 +34,7 @@ ENV NODE_ENV=production
 # ENV NEXT_TELEMETRY_DISABLED=1
 
 # Install curl for Coolify health check
-RUN apt-get install -y curl
+RUN apt-get update && apt-get install -y curl
 
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs
