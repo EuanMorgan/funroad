@@ -5,6 +5,8 @@ import {
 } from "~/modules/library/ui/views/product-view";
 import { HydrateClient, getQueryClient, trpc } from "~/trpc/server";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
 	params: Promise<{ productId: string }>;
 }
