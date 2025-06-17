@@ -30,10 +30,12 @@ export const setAuthCookie = async (payload: Payload, token: string) => {
 		name: `${payload.config.cookiePrefix}-token`,
 		value: token,
 		httpOnly: true,
-		secure: process.env.NODE_ENV === "production",
 		maxAge: 60 * 60 * 24 * 30, // 30 days
 		path: "/",
-		sameSite: "none",
-		domain: env.NEXT_PUBLIC_ROOT_DOMAIN,
+		...(process.env.NODE_ENV !== "development" && {
+			secure: true,
+			sameSite: "none",
+			domain: env.NEXT_PUBLIC_ROOT_DOMAIN,
+		}),
 	});
 };

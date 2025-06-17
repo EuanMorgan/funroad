@@ -1,5 +1,6 @@
 import { tenantsArrayField } from "@payloadcms/plugin-multi-tenant/fields";
 import type { CollectionConfig } from "payload";
+import { env } from "~/env";
 import { isSuperAdmin } from "~/lib/access";
 
 const defaultTenantArrayField = tenantsArrayField({
@@ -35,7 +36,15 @@ export const Users: CollectionConfig = {
 			return req.user?.id === id;
 		},
 	},
-	auth: true,
+	auth: {
+		cookies: {
+			...(process.env.NODE_ENV !== "development" && {
+				secure: true,
+				sameSite: "None",
+				domain: env.NEXT_PUBLIC_ROOT_DOMAIN,
+			}),
+		},
+	},
 	fields: [
 		// Email added by default
 		{
