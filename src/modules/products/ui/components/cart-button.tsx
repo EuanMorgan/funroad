@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
+import { env } from "~/env";
 import { cn } from "~/lib/utils";
 import { useCart } from "~/modules/checkout/hooks/use-cart";
 interface CartButtonProps {
@@ -22,7 +23,7 @@ export const CartButton = ({
 				asChild
 				className="flex-1 font-medium bg-white"
 			>
-				<Link prefetch href={`/library/${productId}`}>
+				<Link href={`${env.NEXT_PUBLIC_BASE_URL}/library/${productId}`}>
 					View in Library
 				</Link>
 			</Button>
