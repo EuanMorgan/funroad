@@ -8,6 +8,8 @@ import { multiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
+import { isSuperAdmin } from "~/lib/access";
+
 // Import all Collections to use below
 import { Categories } from "./collections/Categories";
 import { Media } from "./collections/Media";
@@ -50,7 +52,7 @@ export default buildConfig({
 			tenantsArrayField:{
 				includeDefaultField:false
 			},
-			userHasAccessToAllTenants:user => Boolean(user?.roles?.includes("super-admin"))
+			userHasAccessToAllTenants:user => isSuperAdmin(user)
 		}),
 		// storage-adapter-placeholder
 	],

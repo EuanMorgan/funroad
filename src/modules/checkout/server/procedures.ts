@@ -26,6 +26,9 @@ export const checkoutRouter = createTRPCRouter({
 			const products = await ctx.payload.find({
 				collection: "products",
 				depth: 2,
+				select: {
+					content: false,
+				},
 				where: {
 					and: [
 						{
@@ -123,6 +126,9 @@ export const checkoutRouter = createTRPCRouter({
 		.query(async ({ ctx, input }) => {
 			const data = await ctx.payload.find({
 				collection: "products",
+				select: {
+					content: false,
+				},
 				depth: 2, // Populate category and image
 				where: {
 					id: {
