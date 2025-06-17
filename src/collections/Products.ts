@@ -15,7 +15,6 @@ export const Products: CollectionConfig = {
 
 			return Boolean(tenant?.stripeDetailsSubmitted);
 		},
-		update: ({ req }) => isSuperAdmin(req.user),
 		delete: ({ req }) => isSuperAdmin(req.user),
 	},
 	admin: {
@@ -29,16 +28,15 @@ export const Products: CollectionConfig = {
 			required: true,
 		},
 		{
-			// TODO: Change to rich text
 			name: "description",
-			type: "text",
+			type: "richText",
 		},
 		{
 			name: "price",
 			type: "number",
 			required: true,
 			admin: {
-				description: "in USD",
+				description: "in GBP",
 			},
 		},
 		{
@@ -67,11 +65,30 @@ export const Products: CollectionConfig = {
 		},
 		{
 			name: "content",
-			// TODO: Change to rich text
-			type: "textarea",
+			type: "richText",
 			admin: {
 				description:
 					"Protected content only visible to customers after purchase. Add product documentation, downloadable files, getting started guides, and bonus materials. Supports markdown formatting.",
+			},
+		},
+		{
+			name: "isArchived",
+			label: "Archive",
+			defaultValue: false,
+			type: "checkbox",
+			admin: {
+				description:
+					"Archived products are not able to be seen on the store or purchased",
+			},
+		},
+		{
+			name: "isPrivate",
+			label: "Private",
+			defaultValue: false,
+			type: "checkbox",
+			admin: {
+				description:
+					"Private products are not visible on the public funroad storefront, only your storefront",
 			},
 		},
 	],

@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { headers as getHeaders } from "next/headers";
 import type { Sort, Where } from "payload";
 import { z } from "zod";
@@ -27,6 +28,13 @@ export const productsRouter = createTRPCRouter({
 					content: false,
 				},
 			});
+
+			if (product.isArchived) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Product not found",
+				});
+			}
 
 			let isPurchased = false;
 
@@ -124,12 +132,20 @@ export const productsRouter = createTRPCRouter({
 		)
 		.query(async ({ ctx, input }) => {
 			const where: Where = {
-				price: {},
+				isArchived: {
+					not_equals: true,
+				},
 			};
 
 			if (input.tenantSlug) {
 				where["tenant.slug"] = {
 					equals: input.tenantSlug,
+				};
+			} else {
+				// If we are loading products for the public storefront, we fetch all products that are not private
+				// These products are only shown on the tenant store
+				where.isPrivate = {
+					not_equals: true,
 				};
 			}
 

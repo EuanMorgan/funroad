@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { lexicalEditor, UploadFeature } from "@payloadcms/richtext-lexical";
 import { multiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
 import { buildConfig } from "payload";
 import sharp from "sharp";
@@ -36,7 +36,25 @@ export default buildConfig({
 		}
 	},
 	collections: [Users, Media, Categories, Products, Tags, Tenants, Orders, Reviews],
-	editor: lexicalEditor(),
+	editor: lexicalEditor({
+			features: ({ defaultFeatures }) => [
+				...defaultFeatures,
+				UploadFeature({
+					collections: {
+						media: {
+							fields: [
+								{
+									name: "alt",
+									type: "text",
+									required:true
+								},
+							],
+						},
+					},
+				}),
+			],
+		}
+	),
 	secret: env.PAYLOAD_SECRET,
 	typescript: {
 		outputFile: path.resolve(dirname, "payload-types.ts"),
@@ -50,7 +68,8 @@ export default buildConfig({
 		payloadCloudPlugin(),
 		multiTenantPlugin<Config>({
 			collections:{
-				products:{}
+				products:{},
+				media:{}
 			},
 			tenantsArrayField:{
 				includeDefaultField:false
