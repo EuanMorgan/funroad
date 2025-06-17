@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { CategoriesSidebar } from "~/modules/home/ui/components/search-filters/categories-sidebar";
+import { useProductFilters } from "~/modules/products/hooks/use-product-filters";
 import { useTRPC } from "~/trpc/client";
 
 interface SearchInputProps {
@@ -14,6 +15,7 @@ interface SearchInputProps {
 
 export const SearchInput = ({ disabled }: SearchInputProps) => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+	const { filters, setFilters } = useProductFilters();
 	const trpc = useTRPC();
 
 	const session = useQuery(trpc.auth.session.queryOptions());
@@ -27,6 +29,12 @@ export const SearchInput = ({ disabled }: SearchInputProps) => {
 					className="pl-8"
 					placeholder="Search Products"
 					disabled={disabled}
+					value={filters.search}
+					onChange={(e) => {
+						setFilters({
+							search: e.target.value,
+						});
+					}}
 				/>
 			</div>
 

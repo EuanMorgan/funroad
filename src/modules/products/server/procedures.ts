@@ -127,6 +127,7 @@ export const productsRouter = createTRPCRouter({
 				maxPrice: z.string().nullish(),
 				tags: z.array(z.string()).nullish(),
 				sort: z.enum(sortValues).nullish(),
+				search: z.string().nullish(),
 				tenantSlug: z.string().nullish(),
 			}),
 		)
@@ -216,6 +217,12 @@ export const productsRouter = createTRPCRouter({
 			if (input.tags && input.tags.length > 0) {
 				where["tags.name"] = {
 					in: input.tags,
+				};
+			}
+
+			if (input.search) {
+				where.name = {
+					like: input.search,
 				};
 			}
 

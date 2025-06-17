@@ -26,6 +26,11 @@ export const params = {
 			clearOnDefault: true,
 		})
 		.withDefault([]),
+	search: parseAsString
+		.withOptions({
+			clearOnDefault: true,
+		})
+		.withDefault(""),
 };
 
 export const loadProductFilters = createLoader(params);
