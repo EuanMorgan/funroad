@@ -241,9 +241,13 @@ export interface Product {
    */
   content?: string | null;
   /**
-   * Archived products are not visible to customers
+   * Archived products are not able to be seen on the store or purchased
    */
   isArchived?: boolean | null;
+  /**
+   * Private products are not visible on the public funroad storefront, only your storefront
+   */
+  isPrivate?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -441,6 +445,7 @@ export interface ProductsSelect<T extends boolean = true> {
   refundPolicy?: T;
   content?: T;
   isArchived?: T;
+  isPrivate?: T;
   updatedAt?: T;
   createdAt?: T;
 }

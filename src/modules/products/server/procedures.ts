@@ -141,6 +141,12 @@ export const productsRouter = createTRPCRouter({
 				where["tenant.slug"] = {
 					equals: input.tenantSlug,
 				};
+			} else {
+				// If we are loading products for the public storefront, we fetch all products that are not private
+				// These products are only shown on the tenant store
+				where.isPrivate = {
+					not_equals: true,
+				};
 			}
 
 			// todo: these are just dummy sorts for now, will revisit soon and add proper ones

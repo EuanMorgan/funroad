@@ -79,7 +79,18 @@ export const Products: CollectionConfig = {
 			defaultValue: false,
 			type: "checkbox",
 			admin: {
-				description: "Archived products are not visible to customers",
+				description:
+					"Archived products are not able to be seen on the store or purchased",
+			},
+		},
+		{
+			name: "isPrivate",
+			label: "Private",
+			defaultValue: false,
+			type: "checkbox",
+			admin: {
+				description:
+					"Private products are not visible on the public funroad storefront, only your storefront",
 			},
 		},
 	],
