@@ -4,6 +4,7 @@ import { z } from "zod";
 import { PLATFORM_FEE_PERCENTAGE } from "~/constants";
 import { env } from "~/env";
 import { stripe } from "~/lib/stripe";
+import { generateTenantURL } from "~/lib/utils";
 import type {
 	CheckoutSessionMetadata,
 	ProductMetadata,
@@ -158,11 +159,13 @@ export const checkoutRouter = createTRPCRouter({
 				totalAmount * (PLATFORM_FEE_PERCENTAGE / 100),
 			);
 
+			const domain = generateTenantURL(input.tenantSlug);
+
 			const checkout = await stripe.checkout.sessions.create(
 				{
 					customer_email: ctx.session.user.email,
-					success_url: `${env.NEXT_PUBLIC_BASE_URL}/tenants/${input.tenantSlug}/checkout?success=true`,
-					cancel_url: `${env.NEXT_PUBLIC_BASE_URL}/tenants/${input.tenantSlug}/checkout?cancel=true`,
+					success_url: `${domain}/checkout?success=true`,
+					cancel_url: `${domain}/checkout?cancel=true`,
 					line_items: lineItems,
 					mode: "payment",
 					invoice_creation: {
