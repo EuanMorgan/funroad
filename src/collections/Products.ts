@@ -15,7 +15,6 @@ export const Products: CollectionConfig = {
 
 			return Boolean(tenant?.stripeDetailsSubmitted);
 		},
-		update: ({ req }) => isSuperAdmin(req.user),
 		delete: ({ req }) => isSuperAdmin(req.user),
 	},
 	admin: {
@@ -38,7 +37,7 @@ export const Products: CollectionConfig = {
 			type: "number",
 			required: true,
 			admin: {
-				description: "in USD",
+				description: "in GBP",
 			},
 		},
 		{
@@ -72,6 +71,15 @@ export const Products: CollectionConfig = {
 			admin: {
 				description:
 					"Protected content only visible to customers after purchase. Add product documentation, downloadable files, getting started guides, and bonus materials. Supports markdown formatting.",
+			},
+		},
+		{
+			name: "isArchived",
+			label: "Archive",
+			defaultValue: false,
+			type: "checkbox",
+			admin: {
+				description: "Archived products are not visible to customers",
 			},
 		},
 	],

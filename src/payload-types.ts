@@ -229,7 +229,7 @@ export interface Product {
   name: string;
   description?: string | null;
   /**
-   * in USD
+   * in GBP
    */
   price: number;
   category?: (string | null) | Category;
@@ -240,6 +240,10 @@ export interface Product {
    * Protected content only visible to customers after purchase. Add product documentation, downloadable files, getting started guides, and bonus materials. Supports markdown formatting.
    */
   content?: string | null;
+  /**
+   * Archived products are not visible to customers
+   */
+  isArchived?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -436,6 +440,7 @@ export interface ProductsSelect<T extends boolean = true> {
   image?: T;
   refundPolicy?: T;
   content?: T;
+  isArchived?: T;
   updatedAt?: T;
   createdAt?: T;
 }
