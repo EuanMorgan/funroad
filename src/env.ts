@@ -7,6 +7,7 @@ export const env = createEnv({
 		PAYLOAD_SECRET: z.string(),
 		STRIPE_SECRET_KEY: z.string(),
 		STRIPE_WEBHOOK_SECRET: z.string(),
+		BLOB_READ_WRITE_TOKEN: z.string(),
 	},
 	client: {
 		NEXT_PUBLIC_BASE_URL: z.string().url(),
