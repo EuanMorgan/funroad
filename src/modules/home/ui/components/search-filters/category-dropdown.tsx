@@ -41,6 +41,7 @@ export const CategoryDropdown = ({
 	// };
 
 	return (
+		// biome-ignore lint/a11y/noStaticElementInteractions: ignore
 		<div
 			className="relative"
 			ref={dropdownRef}

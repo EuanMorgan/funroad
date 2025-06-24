@@ -35,7 +35,7 @@ export const Categories = ({ data }: Props) => {
 	const isActiveCategoryHidden =
 		activeCategoryIndex >= visibleCount && activeCategoryIndex !== -1;
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	// biome-ignore lint/correctness/useExhaustiveDependencies: ignore
 	useEffect(() => {
 		const calculateVisible = () => {
 			if (!containerRef.current || !measureRef.current || !viewAllRef.current)
@@ -90,6 +90,7 @@ export const Categories = ({ data }: Props) => {
 			</div>
 
 			{/* Visible items */}
+			{/* biome-ignore lint/a11y/noStaticElementInteractions: ignore */}
 			<div
 				ref={containerRef}
 				className="flex flex-nowrap items-center"

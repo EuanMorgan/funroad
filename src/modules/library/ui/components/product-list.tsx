@@ -71,7 +71,7 @@ export const ProductListSkeleton = () => {
 			}
 		>
 			{Array.from({ length: DEFAULT_PAGINATION_LIMIT }).map((_, i) => (
-				// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+				// biome-ignore lint/suspicious/noArrayIndexKey: ignore
 				<ProductCardSkeleton key={i} />
 			))}
 		</div>
