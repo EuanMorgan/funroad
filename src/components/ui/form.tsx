@@ -5,6 +5,7 @@ import type * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 import {
+	useForm as __useForm,
 	Controller,
 	type ControllerProps,
 	type FieldPath,
@@ -14,9 +15,7 @@ import {
 	useFormContext,
 	useFormState,
 } from "react-hook-form";
-import { useForm as __useForm } from "react-hook-form";
-import type { ZodTypeDef } from "zod";
-import type { ZodType } from "zod";
+import type { ZodType, ZodTypeDef } from "zod";
 
 import { Label } from "~/components/ui/label";
 import { cn } from "~/lib/utils";

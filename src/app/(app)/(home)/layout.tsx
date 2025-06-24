@@ -5,7 +5,7 @@ import {
 	SearchFilters,
 	SearchFiltersSkeleton,
 } from "~/modules/home/ui/components/search-filters";
-import { HydrateClient, getQueryClient, trpc } from "~/trpc/server";
+import { getQueryClient, HydrateClient, trpc } from "~/trpc/server";
 export default async function HomeLayout({
 	children,
 }: {

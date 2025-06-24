@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { generateTenantURL } from "~/lib/utils";
+
 const CheckoutButton = dynamic(
 	() =>
 		import("~/modules/checkout/ui/components/checkout-button").then(
@@ -21,6 +22,7 @@ const CheckoutButton = dynamic(
 		),
 	},
 );
+
 import { useTRPC } from "~/trpc/client";
 
 interface Props {

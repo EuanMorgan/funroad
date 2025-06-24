@@ -1,15 +1,14 @@
+import { useQuery } from "@tanstack/react-query";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ScrollArea } from "~/components/ui/scroll-area";
 import {
 	Sheet,
 	SheetContent,
 	SheetHeader,
 	SheetTitle,
 } from "~/components/ui/sheet";
-
-import { useQuery } from "@tanstack/react-query";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { ScrollArea } from "~/components/ui/scroll-area";
 import type { CategoriesGetManyOutput } from "~/modules/home/ui/components/search-filters/types";
 import { useTRPC } from "~/trpc/client";
 

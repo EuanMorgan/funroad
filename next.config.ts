@@ -1,6 +1,6 @@
 import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
-// biome-ignore lint/correctness/noUnusedImports: <explanation>
+// biome-ignore lint/correctness/noUnusedImports: ignore
 import { env as _validateEnvAtBuildTime } from "./src/env";
 
 const nextConfig: NextConfig = {

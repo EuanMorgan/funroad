@@ -1,7 +1,7 @@
 import type { SearchParams } from "nuqs";
 import { loadProductFilters } from "~/modules/products/search-params";
 import ProductListView from "~/modules/products/ui/views/product-list-view";
-import { HydrateClient, getQueryClient, trpc } from "~/trpc/server";
+import { getQueryClient, HydrateClient, trpc } from "~/trpc/server";
 
 interface Props {
 	searchParams: Promise<SearchParams>;

@@ -3,7 +3,7 @@ import {
 	ProductView,
 	ProductViewSkeleton,
 } from "~/modules/library/ui/views/product-view";
-import { HydrateClient, getQueryClient, trpc } from "~/trpc/server";
+import { getQueryClient, HydrateClient, trpc } from "~/trpc/server";
 
 export const dynamic = "force-dynamic";
 

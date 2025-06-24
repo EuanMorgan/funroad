@@ -1,8 +1,7 @@
-import type Stripe from "stripe";
-
 import config from "@payload-config";
 import { NextResponse } from "next/server";
 import { getPayload } from "payload";
+import type Stripe from "stripe";
 import { env } from "~/env";
 import { stripe } from "~/lib/stripe";
 import type { ExpandedLineItem } from "~/modules/checkout/types";
@@ -44,7 +43,7 @@ export async function POST(request: Request) {
 		);
 	}
 
-	// biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
+	// biome-ignore lint/suspicious/noImplicitAnyLet: ignore
 	let data;
 
 	try {

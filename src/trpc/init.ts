@@ -1,5 +1,5 @@
 import configPromise from "@payload-config";
-import { TRPCError, initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import { headers as getHeaders } from "next/headers";
 import { getPayload } from "payload";
 import { cache } from "react";

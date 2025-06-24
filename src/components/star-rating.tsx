@@ -23,7 +23,7 @@ export const StarRating = ({
 		<div className={cn("flex items-center gap-x-1", className)}>
 			{Array.from({ length: MAX_RATING }).map((_, index) => (
 				<StarIcon
-					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+					// biome-ignore lint/suspicious/noArrayIndexKey: ignore
 					key={index}
 					className={cn(
 						"size-4",
