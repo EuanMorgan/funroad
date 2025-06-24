@@ -43,6 +43,7 @@ export const ProductList = ({
 	if (data.pages.every((p) => p.docs.length === 0)) {
 		return <EmptyState message="No products found" />;
 	}
+
 	return (
 		<>
 			<div
