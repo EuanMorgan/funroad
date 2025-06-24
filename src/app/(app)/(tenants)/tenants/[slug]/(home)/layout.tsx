@@ -1,7 +1,7 @@
 import { type ReactNode, Suspense } from "react";
 import { Footer } from "~/modules/tenants/ui/components/footer";
 import { Navbar, NavbarSkeleton } from "~/modules/tenants/ui/components/navbar";
-import { HydrateClient, getQueryClient, trpc } from "~/trpc/server";
+import { getQueryClient, HydrateClient, trpc } from "~/trpc/server";
 
 interface Props {
 	children: ReactNode;

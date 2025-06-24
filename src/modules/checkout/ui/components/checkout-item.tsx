@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cn, formatCurrency } from "~/lib/utils";
+
 interface CheckoutItemProps {
 	isLast?: boolean;
 	imageUrl?: string | null;

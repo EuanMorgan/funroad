@@ -28,6 +28,7 @@ const CartButton = dynamic(
 		),
 	},
 );
+
 import { useTRPC } from "~/trpc/client";
 
 interface ProductViewProps {

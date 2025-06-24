@@ -3,7 +3,7 @@ import {
 	ProductView,
 	ProductViewSkeleton,
 } from "~/modules/products/ui/views/product-view";
-import { HydrateClient, getQueryClient, trpc } from "~/trpc/server";
+import { getQueryClient, HydrateClient, trpc } from "~/trpc/server";
 
 interface Props {
 	params: Promise<{ productId: string; slug: string }>;
